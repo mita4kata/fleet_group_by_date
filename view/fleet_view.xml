@@ -1,1 +1,47 @@
-
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <!-- Odometer -->
+    <record model='ir.ui.view' id='fleet_vehicle_odometer_search_view'>
+        <field name="name">fleet.vehicle.odometer.search.view</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <field name="date"/>
+            </xpath>
+            <xpath expr="//filter[@name='groupby_vehicle']" position="after">
+                <filter name="groupby_year" string="Year" domain="[]" 
+                    context="{'group_by':'date:year'}" />
+                <filter name="groupby_week" string="Week" domain="[]" 
+                    context="{'group_by':'date:week'}" />
+                <filter name="groupby_day" string="Day" domain="[]" 
+                    context="{'group_by':'date:day'}" />
+            </xpath>
+        </field>
+    </record>
+    <!-- Inherited view for Vehicle odometer  -->
+    <record id="view_fleet_odometer" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree" />
+          <field name="arch" type="xml">
+           <field name="vehicle_id" position="before">
+             <field name="__last_update"/>
+             <field name="driver_id"/>
+           </field>
+          </field>
+    </record>
+	
+    <record id="fleet_vehicle_log_fuel_view_tree" model="ir.ui.view">
+        <field name="name">vehicle.log.fuel.tree</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree" />
+          <field name="arch" type="xml">
+           <field name="model" position="after">
+             <field name="liter"/>
+             <field name="amount"/>
+             <field name="fuel_type"/>
+           </field>
+          </field>
+    </record>
+</odoo>
